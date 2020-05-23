@@ -97,3 +97,5 @@ def global_total():
     result.append(node)
     return node
 
+
+print('test')
