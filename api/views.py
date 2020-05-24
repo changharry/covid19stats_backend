@@ -21,3 +21,9 @@ def global_total(request):
     json_response = JsonResponse(cd.global_total(), safe=False)
     json_response["Access-Control-Allow-Origin"] = "*"
     return json_response
+
+
+def regional_stats(request):
+    json_response = JsonResponse(cd.region_stats(), safe=False)
+    json_response["Access-Control-Allow-Origin"] = "*"
+    return json_response

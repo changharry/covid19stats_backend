@@ -35,6 +35,7 @@ def global_dict(list_of_dicts):
     csv_sorted(list_of_dicts)
     for i in range(len(list_of_dicts)):
         if i == len(list_of_dicts) - 1:
+            formatted_dict.append(list_of_dicts[i])
             break
         if list_of_dicts[i]['Country/Region'] == list_of_dicts[i + 1]['Country/Region']:
             list_of_dicts[i + 1]['Province/State'] = ''
@@ -98,4 +99,39 @@ def global_total():
     return node
 
 
-print('test')
+r_confirmed_dicts = toListOfDict(global_confirmed_csv)
+r_deaths_dicts = toListOfDict(global_deaths_csv)
+r_recovered_dicts = toListOfDict(global_recovered_csv)
+
+
+def region_stats():
+    with_province = {
+        'Australia': [],
+        'Canada': [],
+        'China': [],
+        'Netherlands': [],
+        'UK': [],
+        'France': [],
+        'Denmark': []
+    }
+    csv_sorted(r_confirmed_dicts)
+    csv_sorted(r_deaths_dicts)
+    csv_sorted(r_recovered_dicts)
+    for i in range(len(r_confirmed_dicts)):
+        c = r_confirmed_dicts[i]['Country/Region']
+        if c in list(with_province.keys()):
+            node = {
+                'province': r_confirmed_dicts[i]['Province/State'],
+                'confirmed': dic_index(r_confirmed_dicts[i], -1),
+                'confirmed_change': dic_index(r_confirmed_dicts[i], -1) - dic_index(r_confirmed_dicts[i], -2),
+                'deaths': dic_index(r_deaths_dicts[i], -1),
+                'deaths_change': dic_index(r_deaths_dicts[i], -1) - dic_index(r_deaths_dicts[i], -2),
+                'recovered': dic_index(r_recovered_dicts[i], -1),
+                'recovered_change': dic_index(r_recovered_dicts[i], -1) - dic_index(r_recovered_dicts[i], -2)
+            }
+            with_province[c].append(node)
+    return with_province
+
+
+def region_total():
+    pass
