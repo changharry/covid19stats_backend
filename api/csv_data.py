@@ -130,6 +130,11 @@ def region_stats():
                 'recovered_change': dic_index(r_recovered_dicts[i], -1) - dic_index(r_recovered_dicts[i], -2)
             }
             with_province[c].append(node)
+
+            def sort_key(e):
+                return e['confirmed']
+
+            with_province[c].sort(key=sort_key, reverse=True)
     return with_province
 
 
