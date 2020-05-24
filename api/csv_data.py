@@ -110,7 +110,7 @@ def region_stats():
         'Canada': [],
         'China': [],
         'Netherlands': [],
-        'UK': [],
+        'United Kingdom': [],
         'France': [],
         'Denmark': []
     }
@@ -135,8 +135,17 @@ def region_stats():
                 return e['confirmed']
 
             with_province[c].sort(key=sort_key, reverse=True)
+        else:
+            node = [{
+                'province': '',
+                'confirmed': dic_index(r_confirmed_dicts[i], -1),
+                'confirmed_change': dic_index(r_confirmed_dicts[i], -1) - dic_index(r_confirmed_dicts[i], -2),
+                'deaths': dic_index(r_deaths_dicts[i], -1),
+                'deaths_change': dic_index(r_deaths_dicts[i], -1) - dic_index(r_deaths_dicts[i], -2),
+                'recovered': dic_index(r_recovered_dicts[i], -1),
+                'recovered_change': dic_index(r_recovered_dicts[i], -1) - dic_index(r_recovered_dicts[i], -2)
+            }]
+            with_province[c] = node
     return with_province
 
 
-def region_total():
-    pass
