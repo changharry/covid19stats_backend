@@ -67,7 +67,8 @@ def global_stats():
                 'deaths': dic_index(deaths_dicts[i], -1),
                 'deaths_change': dic_index(deaths_dicts[i], -1) - dic_index(deaths_dicts[i], -2),
                 'recovered': dic_index(recovered_dicts[i], -1),
-                'recovered_change': dic_index(recovered_dicts[i], -1) - dic_index(recovered_dicts[i], -2)}
+                'recovered_change': dic_index(recovered_dicts[i], -1) - dic_index(recovered_dicts[i], -2),
+                'update_time': list(confirmed_dicts[i].keys())[-1]}
         result.append(node)
 
         def sort_key(e):
@@ -149,3 +150,8 @@ def region_stats():
     return with_province
 
 
+def graph_data(lod):
+    dict_lod = global_dict(lod)
+    labels = list(dict_lod[0].keys())
+
+    return {'graph': 'graph'}

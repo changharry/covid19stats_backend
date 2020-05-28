@@ -1,3 +1,5 @@
+import time
+
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 import csv
@@ -25,5 +27,11 @@ def global_total(request):
 
 def regional_stats(request):
     json_response = JsonResponse(cd.region_stats(), safe=False)
+    json_response["Access-Control-Allow-Origin"] = "*"
+    return json_response
+
+
+def graph_data(request):
+    json_response = JsonResponse(cd.graph_data(), safe=False)
     json_response["Access-Control-Allow-Origin"] = "*"
     return json_response
