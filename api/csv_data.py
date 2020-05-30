@@ -192,7 +192,7 @@ def g_total_change():
 
 
 def rate_difference(data):
-    return [100 * (b - a) / a for a, b in zip(data[::1], data[1::1])]
+    return [100 * (b - a) / a if a != 0 else 0 for a, b in zip(data[::1], data[1::1])]
 
 
 def g_total_rate_change():
@@ -201,5 +201,56 @@ def g_total_rate_change():
         'confirmed': rate_difference(graph_data_v(confirmed_dicts)),
         'deaths': rate_difference(graph_data_v(deaths_dicts)),
         'recovered': rate_difference(graph_data_v(recovered_dicts))
+    }
+    return node
+
+
+print(confirmed_dicts)
+
+
+def itr_r(country, dicts):
+    for i in dicts:
+        if i['Country/Region'] == country:
+            return i
+
+
+def r_total(country):
+    c_data = list(itr_r(country, confirmed_dicts).values())[4:]
+    d_data = list(itr_r(country, deaths_dicts).values())[4:]
+    r_data = list(itr_r(country, recovered_dicts).values())[4:]
+    label = list(itr_r(country, confirmed_dicts).keys())[4:]
+    node = {
+        'label': label,
+        'c': c_data,
+        'd': d_data,
+        'r': r_data
+    }
+    return node
+
+
+def r_change(country):
+    c_data = difference(list(map(int, list(itr_r(country, confirmed_dicts).values())[4:])))
+    d_data = difference(list(map(int, list(itr_r(country, deaths_dicts).values())[4:])))
+    r_data = difference(list(map(int, list(itr_r(country, recovered_dicts).values())[4:])))
+    label = list(itr_r(country, confirmed_dicts).keys())[4:][1:]
+    node = {
+        'label': label,
+        'c': c_data,
+        'd': d_data,
+        'r': r_data
+    }
+    return node
+
+
+def r_rate_change(country):
+    c_data = rate_difference(list(map(int, list(itr_r(country, confirmed_dicts).values())[4:])))
+    d_data = rate_difference(list(map(int, list(itr_r(country, deaths_dicts).values())[4:])))
+    r_data = rate_difference(list(map(int, list(itr_r(country, recovered_dicts).values())[4:])))
+    label = list(itr_r(country, confirmed_dicts).keys())[4:][1:]
+    node = {
+        'label': label,
+        'c': c_data,
+        'd': d_data,
+        'r': r_data
     }
     return node
