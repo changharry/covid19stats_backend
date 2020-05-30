@@ -31,7 +31,19 @@ def regional_stats(request):
     return json_response
 
 
-def graph_data(request):
-    json_response = JsonResponse(cd.graph_data(), safe=False)
+def g_total(request):
+    json_response = JsonResponse(cd.g_total(), safe=False)
+    json_response["Access-Control-Allow-Origin"] = "*"
+    return json_response
+
+
+def g_total_change(request):
+    json_response = JsonResponse(cd.g_total_change(), safe=False)
+    json_response["Access-Control-Allow-Origin"] = "*"
+    return json_response
+
+
+def g_total_rate_change(request):
+    json_response = JsonResponse(cd.g_total_rate_change(), safe=False)
     json_response["Access-Control-Allow-Origin"] = "*"
     return json_response

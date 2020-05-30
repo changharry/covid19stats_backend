@@ -1,5 +1,6 @@
 import csv
 import os
+import numpy as np
 import django
 
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "covid19stats_backend.settings")
@@ -150,8 +151,55 @@ def region_stats():
     return with_province
 
 
-def graph_data(lod):
+def graph_data_v(lod):
     dict_lod = global_dict(lod)
-    labels = list(dict_lod[0].keys())
+    values = []
+    for i in dict_lod:
+        v = list(i.values())[4:]
+        v = list(map(int, v))
+        values.append(v)
+    return [sum(x) for x in zip(*values)]
 
-    return {'graph': 'graph'}
+
+def graph_data_l(lod):
+    dict_lod = global_dict(lod)
+    labels = list(dict_lod[0].keys())[4:]
+    return labels
+
+
+def g_total():
+    node = {
+        'label': graph_data_l(confirmed_dicts),
+        'confirmed': graph_data_v(confirmed_dicts),
+        'deaths': graph_data_v(deaths_dicts),
+        'recovered': graph_data_v(recovered_dicts)
+    }
+    return node
+
+
+def difference(data):
+    return [(b - a) for a, b in zip(data[::1], data[1::1])]
+
+
+def g_total_change():
+    node = {
+        'label': graph_data_l(confirmed_dicts)[1:],
+        'confirmed': difference(graph_data_v(confirmed_dicts)),
+        'deaths': difference(graph_data_v(deaths_dicts)),
+        'recovered': difference(graph_data_v(recovered_dicts))
+    }
+    return node
+
+
+def rate_difference(data):
+    return [100 * (b - a) / a for a, b in zip(data[::1], data[1::1])]
+
+
+def g_total_rate_change():
+    node = {
+        'label': graph_data_l(confirmed_dicts)[1:],
+        'confirmed': rate_difference(graph_data_v(confirmed_dicts)),
+        'deaths': rate_difference(graph_data_v(deaths_dicts)),
+        'recovered': rate_difference(graph_data_v(recovered_dicts))
+    }
+    return node
