@@ -11,5 +11,6 @@ urlpatterns = [
     path('g_total_rate_change', views.g_total_rate_change),
     path('r_total/<str:country>', views.r_total),
     path('r_change/<str:country>', views.r_change),
-    path('r_rate_change/<str:country>', views.r_rate_change)
-]
+    path('r_rate_change/<str:country>', views.r_rate_change),
+    path('r_delta_rate_change/<str:country>', views.r_delta_rate_change),
+    path('g_delta_rate_change', views.g_delta_rate_change)]

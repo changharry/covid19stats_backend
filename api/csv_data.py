@@ -205,9 +205,6 @@ def g_total_rate_change():
     return node
 
 
-print(confirmed_dicts)
-
-
 def itr_r(country, dicts):
     for i in dicts:
         if i['Country/Region'] == country:
@@ -254,3 +251,34 @@ def r_rate_change(country):
         'r': r_data
     }
     return node
+
+
+def r_delta_rate_change(country):
+    c_data = rate_difference(difference(list(map(int, list(itr_r(country, confirmed_dicts).values())[4:]))))
+    d_data = rate_difference(difference(list(map(int, list(itr_r(country, deaths_dicts).values())[4:]))))
+    r_data = rate_difference(difference(list(map(int, list(itr_r(country, recovered_dicts).values())[4:]))))
+    label = list(itr_r(country, confirmed_dicts).keys())[4:][1:][1:]
+    node = {
+        'label': label,
+        'c': c_data,
+        'd': d_data,
+        'r': r_data
+    }
+    return node
+
+
+def g_delta_rate_change():
+    c_data = rate_difference(difference(graph_data_v(confirmed_dicts)))
+    d_data = rate_difference(difference(graph_data_v(deaths_dicts)))
+    r_data = rate_difference(difference(graph_data_v(recovered_dicts)))
+    label = graph_data_l(confirmed_dicts)[2:]
+    node = {
+        'label': label,
+        'c': c_data,
+        'd': d_data,
+        'r': r_data
+    }
+    return node
+
+
+

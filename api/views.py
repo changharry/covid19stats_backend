@@ -65,3 +65,15 @@ def r_rate_change(request, country):
     json_response = JsonResponse(cd.r_rate_change(country), safe=False)
     json_response["Access-Control-Allow-Origin"] = "*"
     return json_response
+
+
+def r_delta_rate_change(request, country):
+    json_response = JsonResponse(cd.r_delta_rate_change(country), safe=False)
+    json_response["Access-Control-Allow-Origin"] = "*"
+    return json_response
+
+
+def g_delta_rate_change(request):
+    json_response = JsonResponse(cd.g_delta_rate_change(), safe=False)
+    json_response["Access-Control-Allow-Origin"] = "*"
+    return json_response
