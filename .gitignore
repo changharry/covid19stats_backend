@@ -1,5 +1,6 @@
 covid19stats_backend/.env
 .idea
 db.sqlite3
+.env
 # Project exclude paths
 /venv/
